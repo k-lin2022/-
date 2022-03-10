@@ -48,11 +48,21 @@
 	for(var c = 0; c < brickColumnCount; c++) {
 		bricks[c] = [];
 		for(var r = 0; r < brickRowCount; r++) {
-			if (c % 2 == 0) {
-				bricks[c][r] = { x: 0, y: 0, status: 3 };
+			if (r % 2 == 0) {
+				if (c % 2 == 0) {
+					bricks[c][r] = { x: 0, y: 0, status: 3 };
+				}
+				else {
+					bricks[c][r] = { x: 0, y: 0, status: 2 };
+				}
 			}
 			else {
-				bricks[c][r] = { x: 0, y: 0, status: 2 };
+				if (c % 2 == 1) {
+					bricks[c][r] = { x: 0, y: 0, status: 3 };
+				}
+				else {
+					bricks[c][r] = { x: 0, y: 0, status: 2 };
+				}
 			}
 		}
 	}
@@ -144,7 +154,7 @@
 							score++;
 						}
 						if(score == brickRowCount * brickColumnCount) {
-							alert("YOU WIN, CONGRATULATIONS!");
+							alert("YOU WIN, CONGRATULATIONS!\n点数 : " + score + "\n達成率 : 100%");
 							document.location.reload();
 						}
 					}
@@ -198,7 +208,7 @@
 				lives--;
 				paddleWidth -= 25;
 				if(!lives) {
-					alert("GAME OVER");
+					alert("GAME OVER\n点数 : " + score + "\n達成率 : " + Math.floor((score * 100) / (brickRowCount * brickColumnCount)) + "%");
 					document.location.reload();
 				}
 				else {
