@@ -10,11 +10,14 @@
 </head>
 <body>
 
-<h1>
-	<% for (let item of items) { %>
-		<%- item.name %>
-	<% } %>
-</h1>
+<form action="http://127.0.0.1:3000/update" method="post">
+	<input type="hidden" id="name" name="name" value="<%- items[0].name %>">
+	<input type="hidden" id="password" name="password" value="<%- items[1].password %>">
+	<input type="hidden" id="score" name="score" value="">
+	<%- items[0].name %>   
+	<input type="submit" value="更新">
+	<hr>
+</form>
 
 <canvas id="myCanvas" width="850" height="630"></canvas>
 
@@ -49,6 +52,9 @@
 	var lives = 3;
 
 	var randomColor = "#" + Math.floor(Math.random() * 0xFFFFFF).toString(16);
+
+	const username = document.getElementById("name").value;
+	const userpassword = document.getElementById("password").value;
 
 	var bricks = [];
 	for(var c = 0; c < brickColumnCount; c++) {
@@ -161,7 +167,8 @@
 						}
 						if(score == brickRowCount * brickColumnCount) {
 							alert("YOU WIN, CONGRATULATIONS!\n点数 : " + score + "\n達成率 : 100%");
-							document.location.reload();
+							document.getElementById("score").value = '100%';
+							// document.location.reload();
 						}
 					}
 				}
@@ -215,7 +222,8 @@
 				paddleWidth -= 25;
 				if(!lives) {
 					alert("GAME OVER\n点数 : " + score + "\n達成率 : " + Math.floor((score * 100) / (brickRowCount * brickColumnCount)) + "%");
-					document.location.reload();
+					
+					document.getElementById("score").value = Math.floor((score * 100) / (brickRowCount * brickColumnCount)) + '%';
 				}
 				else {
 					x = canvas.width / 2;
@@ -236,10 +244,14 @@
 			paddleX -= 7;
 		}
 
-		requestAnimationFrame(draw);
+		if (lives) {
+			requestAnimationFrame(draw);
+		}
 	}
 
-	draw();
+	if (lives) {
+		draw();
+	}
 </script>
 
 </body>

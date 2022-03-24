@@ -27,7 +27,8 @@ app.post('/api/v1/create-user', (req, res) =>{
                 if (!result2.length == 0) {
                     var data = {
                         items: [
-                            {name: req.body.name}
+                            {name: req.body.name},
+                            {password: req.body.password}
                         ]
                     };
                     res.render(__dirname + '/index02.ejs', data);
@@ -65,7 +66,24 @@ app.get('/api/v1/get-all-user', (req, res) =>{
 });
 
 
-
+app.post('/update', (req, res) =>{
+    User.updateOne({name: req.body.name}, {$set: {score: req.body.score}}, function(err, result){
+        console.log(req.body.name);
+        if(!err) {
+            var data = {
+                items: [
+                    {name: req.body.name},
+                    {password: req.body.password},
+                    {score: req.body.score}
+                ]
+            };
+            res.render(__dirname + '/result.ejs', data);
+            // return res.json(result);
+        } else {
+            return res.status(500).send('get all user faild.');
+        }
+    });
+});
 
 
 // const express = require('express');
@@ -77,6 +95,10 @@ app.get('/api/v1/get-all-user', (req, res) =>{
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/login.html');
 })
+
+app.get('/result', (req, res) => {
+    res.sendFile(__dirname + '/result.html');
+  })
 
 // app.listen(port, () => {
 //   console.log(`Example app listening on port ${port}`);

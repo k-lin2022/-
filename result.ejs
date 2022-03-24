@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ブロック崩しゲーム</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    </style>
+</head>
+<body>
+
+<form action="http://127.0.0.1:3000/api/v1/create-user" method="post">
+    name:<br>
+    <%- items[0].name %><br>
+    score:<br>
+    <%- items[2].score %><br>
+    <input type="hidden" id="name" name="name" value="<%- items[0].name %>">
+	<input type="hidden" id="password" name="password" value="<%- items[1].password %>">
+    <input type="submit" value="再チャレンジ">
+</form>
+
+</body>
+</html>
